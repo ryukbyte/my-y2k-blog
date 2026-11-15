@@ -1,68 +1,175 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Hook from React Router for navigation
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
-        // Check if the passwords match
         if (password !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
 
-        // Simulate user registration process
-        console.log('User registered:', { email, password });
-        // After registration, redirect to the login page
-        navigate('/login'); // Replace '/login' with your login page route
+        try {
+            setLoading(true);
+
+            await createUserWithEmailAndPassword(auth, email, password);
+
+            alert('Account created successfully!');
+            navigate('/login');
+
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <form onSubmit={handleSubmit} className="p-10 bg-white rounded-lg shadow-lg" style={{ width: "70%" }}>
-                <h2 className="text-2xl font-bold mb-5 text-gray-800">Sign In</h2>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="mt-1 p-2 w-full border rounded"
-                    />
+        <div className="min-h-screen bg-[#fffaf0] flex items-center justify-center px-5 py-16">
+
+            <div className="w-full max-w-md">
+
+                {/* Page Heading */}
+                <div className="text-center mb-8">
+                    <p className="text-sm tracking-[0.3em] uppercase text-[#a65e7d] mb-4">
+                        A new beginning
+                    </p>
+
+                    <h1 className="text-5xl font-serif font-bold text-[#51434a]">
+                        Join the <span className="italic text-[#c77f99]">club!</span>
+                    </h1>
+
+                    <p className="text-[#897780] mt-4 leading-7">
+                        Create your little space on the internet.
+                    </p>
+
+                    <p className="text-2xl text-[#c77f99] mt-4">
+                        ✧ ♡ ✧
+                    </p>
                 </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className="mt-1 p-2 w-full border rounded"
-                    />
+
+                {/* Signup Card */}
+                <div className="bg-white border border-[#e8d8cc] rounded-2xl p-7 md:p-9 shadow-lg">
+
+                    <div className="flex justify-between items-center mb-7">
+                        <div>
+                            <p className="text-xs tracking-widest uppercase text-[#a65e7d] mb-2">
+                                Become a member
+                            </p>
+
+                            <h2 className="text-2xl font-serif font-bold text-[#51434a]">
+                                Create account ✿
+                            </h2>
+                        </div>
+
+                        <div className="w-12 h-12 rounded-full bg-[#f5dce5] flex items-center justify-center text-2xl">
+                            🎀
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
+                        {/* Email */}
+                        <div>
+                            <label className="block text-sm font-medium text-[#74656b] mb-2">
+                                Email address
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="you@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="w-full p-3 bg-[#fffaf0] border border-[#e8d8cc] rounded-xl text-[#51434a] placeholder-[#b69aa4] focus:outline-none focus:ring-2 focus:ring-[#c77f99]"
+                            />
+                        </div>
+
+                        {/* Password */}
+                        <div>
+                            <label className="block text-sm font-medium text-[#74656b] mb-2">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                placeholder="Create a password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                className="w-full p-3 bg-[#fffaf0] border border-[#e8d8cc] rounded-xl text-[#51434a] placeholder-[#b69aa4] focus:outline-none focus:ring-2 focus:ring-[#c77f99]"
+                            />
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div>
+                            <label className="block text-sm font-medium text-[#74656b] mb-2">
+                                Confirm password
+                            </label>
+
+                            <input
+                                type="password"
+                                placeholder="Enter your password again"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                                className="w-full p-3 bg-[#fffaf0] border border-[#e8d8cc] rounded-xl text-[#51434a] placeholder-[#b69aa4] focus:outline-none focus:ring-2 focus:ring-[#c77f99]"
+                            />
+                        </div>
+
+                        {/* Error */}
+                        {error && (
+                            <p className="text-sm text-[#a65e7d] bg-[#f5dce5] border border-[#d8b1bd] p-3 rounded-lg">
+                                {error}
+                            </p>
+                        )}
+
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="button-style w-full disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                            {loading ? 'Creating account...' : 'Create my account ✧'}
+                        </button>
+
+                    </form>
+
+                    {/* Login Link */}
+                    <div className="border-t border-dashed border-[#e8d8cc] mt-7 pt-6 text-center">
+                        <p className="text-sm text-[#897780]">
+                            Already have an account?
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/login')}
+                            className="mt-2 text-[#a65e7d] font-semibold hover:text-[#c77f99] underline underline-offset-4"
+                        >
+                            Login here ♡
+                        </button>
+                    </div>
                 </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Confirm Password:</label>
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                        className="mt-1 p-2 w-full border rounded"
-                    />
-                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-                </div>
-                <p className='text-blue-600 cursor-pointer my-2' onClick={() => navigate("/login")}> Already have an account? Login here</p>
-                <button type="submit" className="bg-orange-400 text-white py-2 px-4 rounded hover:bg-orange-600 transition duration-200 ease-in-out">
-                    Register
-                </button>
-            </form>
+
+                {/* Bottom Note */}
+                <p className="text-center text-sm text-[#b69aa4] mt-7 font-serif italic">
+                    Glad you're here. Make yourself at home!
+                </p>
+
+            </div>
         </div>
     );
 }

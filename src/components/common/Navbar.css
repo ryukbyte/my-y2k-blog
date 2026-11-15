@@ -1,19 +1,36 @@
+/* Scrapbook-style shared button */
+
 .button-style {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    
-    background: linear-gradient(to right, #FAA116, #df7320);
-    color: #fff;
-    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
+    border: 1px solid #b66f89;
+    border-radius: 25px;
+    background: #c77f99;
+    color: #fffaf0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    box-shadow: 3px 3px 0 #e8d8cc;
+    transition: all 0.25s ease;
+    cursor: pointer;
 }
 
 .button-style:hover {
-    background: linear-gradient(to right, #ff5f3e, #fb8c4f);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    background: #a65e7d;
+    transform: translateY(-2px);
+    box-shadow: 4px 5px 0 #e8d8cc;
+}
+
+.button-style:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0 #e8d8cc;
+}
+
+.button-style:focus-visible {
+    outline: 2px solid #71856b;
+    outline-offset: 3px;
 }

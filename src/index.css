@@ -2,8 +2,161 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+/* =================================
+   PERSONAL WEBSITE — GLOBAL THEME
+================================= */
+
+:root {
+  --pink: #c77f99;
+  --dusty-rose: #a65e7d;
+  --light-pink: #f5dce5;
+  --cream: #fffaf0;
+  --warm-cream: #f8eee8;
+  --sage: #71856b;
+  --light-sage: #e4eadc;
+  --brown: #51434a;
+  --border-pink: #d8b1bd;
+  --soft-shadow: #e8d8cc;
+}
+
+/* =================================
+   BASE STYLES
+================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 25px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 16px;
-  background-color: #EBEBEB;
-  padding: 20px;
+  background-color: var(--warm-cream);
+  color: var(--brown);
+  line-height: 1.6;
+}
+
+/* =================================
+   TYPOGRAPHY
+================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
+}
+
+::selection {
+  background: #e9bfd0;
+  color: #593e4b;
+}
+
+/* =================================
+   LINKS
+================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--dusty-rose);
+}
+
+/* =================================
+   BUTTONS
+================================= */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.button-style {
+  background-color: var(--pink);
+  color: white;
+  padding: 10px 22px;
+  border: 1px solid #b66f89;
+  border-radius: 25px;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  box-shadow: 3px 3px 0 var(--soft-shadow);
+}
+
+.button-style:hover {
+  background-color: var(--dusty-rose);
+  transform: translateY(-2px);
+  box-shadow: 4px 5px 0 var(--soft-shadow);
+}
+
+/* =================================
+   IMAGES
+================================= */
+
+img {
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d9a9b6;
+  border-radius: 20px;
+  border: 2px solid var(--warm-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
+
+/* =================================
+   FORM ELEMENTS
+================================= */
+
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #d9a9b6;
+  outline-offset: 2px;
+}
+
+/* =================================
+   MOBILE ADJUSTMENTS
+================================= */
+
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
 }
