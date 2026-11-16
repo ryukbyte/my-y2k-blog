@@ -7,7 +7,9 @@ const cors = require('cors');
 const admin = require('firebase-admin');
 const { getAuth } = require('firebase-admin/auth');
 
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+  : require('./serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.cert(serviceAccount)
@@ -47,7 +49,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/blogDB')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/blogDB')
   .then(() => {
     console.log('Connection Successful');
   })
@@ -151,6 +153,8 @@ app.delete('/api/blogs/:id', verifyFirebaseToken, requireAdmin, async (req, res)
 });
 
 // Start server
-app.listen(5001, () => {
-  console.log('Server running on port 5001');
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
