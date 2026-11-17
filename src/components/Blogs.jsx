@@ -5,7 +5,7 @@ import Footer from './common/Footer';
 import { auth } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
-const API = 'http://localhost:5001/api/blogs';
+const API = 'https://my-y2k-blog.onrender.com/api/blogs';
 const ADMIN_EMAIL = 'vidula.saravanan@gmail.com';
 
 function Blogs() {
